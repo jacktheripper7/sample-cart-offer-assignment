@@ -140,22 +140,22 @@ Focused scenarios for **multi-segment offers**:
 
 ```mermaid
 flowchart LR
-    A[Client / Tests (Rest Assured)] --> B[Controller (AutowiredController)]
-    B --> C[Service (OfferService)]
-    C --> D[Repository (OfferRepository)]
+    A[Client & Tests (Rest Assured)] --> B[Controller: AutowiredController]
+    B --> C[Service: OfferService]
+    C --> D[Repository: OfferRepository]
     C --> E[MockServer: User Segment API]
 
     D -->|Stores & Retrieves Offers| C
     E -->|Provides Segment Info| C
-```
+````
 
-* **Client / Tests** → Rest Assured test cases trigger HTTP requests.
+* **Client & Tests** → Rest Assured test cases trigger HTTP requests.
 * **Controller** → Maps the request (`/offer`, `/cart/apply_offer`).
 * **Service** → Validates, applies discount logic, decides response.
 * **Repository** → Stores offers (in-memory, first-offer-wins).
 * **MockServer** → Simulates external user segment API.
 
----
+
 
 ## 🤖 Use of AI
 
