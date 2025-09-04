@@ -1,5 +1,6 @@
 package com.springboot.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OfferRequest {
-    private int restaurant_id;
-    private String offer_type;
-    private int offer_value;
-
-    private List<String> customer_segment;
+    @JsonProperty("restaurant_id")
+    private int restaurantId;
+    @JsonProperty("offer_type")
+    private String offerType;
+    @JsonProperty("offer_value")
+    private int offerValue;
+    @JsonProperty("customer_segment")
+    private List<String> customerSegment;
 }

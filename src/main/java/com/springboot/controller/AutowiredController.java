@@ -1,84 +1,68 @@
 package com.springboot.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot.service.Dog;
+import com.springboot.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.springboot.service.Animal;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 public class AutowiredController {
 
+	private static final Logger logger = LoggerFactory.getLogger(AutowiredController.class);
+	private final OfferService offerService;
 
-	List<OfferRequest> allOffers = new ArrayList<>();
+	@Autowired
+	public AutowiredController(OfferService offerService) {
+		this.offerService = offerService;
+	}
 
 	@PostMapping(path = "/api/v1/offer")
-	public ApiResponse postOperation(@RequestBody OfferRequest offerRequest) {
-		System.out.println(offerRequest);
-		allOffers.add(offerRequest);
-		return new ApiResponse("success");
+	public ResponseEntity<?> addOffer(@RequestBody OfferRequest offerRequest) {
+		logger.info("Received add offer request: {}", offerRequest);
+
+		try {
+			boolean success = offerService.addOffer(offerRequest);
+			return ResponseEntity.ok(new ApiResponse("success"));
+		} catch (IllegalArgumentException e) {
+			logger.error("Invalid offer request: {}", e.getMessage());
+			return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage()));
+		} catch (Exception e) {
+			logger.error("Error adding offer", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse("Internal server error"));
+		}
 	}
 
 	@PostMapping(path = "/api/v1/cart/apply_offer")
-	public ApplyOfferResponse applyOffer(@RequestBody ApplyOfferRequest applyOfferRequest) throws Exception {
-		System.out.println(applyOfferRequest);
-		int cartVal = applyOfferRequest.getCart_value();
-		SegmentResponse segmentResponse = getSegmentResponse(applyOfferRequest.getUser_id());
-		Optional<OfferRequest> matchRequest = allOffers.stream().filter(x->x.getRestaurant_id()==applyOfferRequest.getRestaurant_id())
-				.filter(x->x.getCustomer_segment().contains(segmentResponse.getSegment()))
-				.findFirst();
+	public ResponseEntity<?> applyOffer(@RequestBody ApplyOfferRequest applyOfferRequest) {
+		logger.info("Received apply offer request: {}", applyOfferRequest);
 
-		if(matchRequest.isPresent()){
-			System.out.println("got a match");
-//			System.out.println(matchRequest.get());
-			OfferRequest gotOffer = matchRequest.get();
-
-			if(gotOffer.getOffer_type().equals("FLATX")) {
-				cartVal = cartVal - gotOffer.getOffer_value();
-			} else {
-				cartVal = (int) (cartVal - cartVal * gotOffer.getOffer_value()*(0.01));
-			}
-
-		}
-		return new ApplyOfferResponse(cartVal);
-	}
-
-	private SegmentResponse getSegmentResponse(int userid)
-	{
-		SegmentResponse segmentResponse = new SegmentResponse();
 		try {
-			String urlString = "http://localhost:1080/api/v1/user_segment?" + "user_id=" + userid;
-			URL url = new URL(urlString);
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("GET");
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-
-			connection.setRequestProperty("accept", "application/json");
-
-			// This line makes the request
-			InputStream responseStream = connection.getInputStream();
-
-			// Manually converting the response body InputStream to APOD using Jackson
-			ObjectMapper mapper = new ObjectMapper();
-			 segmentResponse = mapper.readValue(responseStream,SegmentResponse.class);
-			System.out.println("got segment response" + segmentResponse);
-
-
+			ApplyOfferResponse response = offerService.applyOffer(applyOfferRequest);
+			return ResponseEntity.ok(response);
+		} catch (IllegalArgumentException e) {
+			logger.error("Invalid apply offer request: {}", e.getMessage());
+			return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage()));
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.error("Error applying offer", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApplyOfferResponse(applyOfferRequest.getCart_value()));
 		}
-		return segmentResponse;
 	}
 
-
+	@PostMapping(path = "/api/v1/offer/clear")
+	public ResponseEntity<ApiResponse> clearOffers() {
+		logger.info("Clearing all offers");
+		try {
+			offerService.clearOffers();
+			return ResponseEntity.ok(new ApiResponse("success"));
+		} catch (Exception e) {
+			logger.error("Error clearing offers", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse("Internal server error"));
+		}
+	}
 }

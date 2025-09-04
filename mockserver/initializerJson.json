@@ -1,15 +1,130 @@
 [
-    {
-      "httpRequest" : {
-        "method" : "GET",
-        "path" : "/api/v1/user_segment",
-        "queryStringParameters" : {
-          "user_id" : ["1"]
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["1"]
       }
     },
-      "httpResponse" : {
-        "body" : "{\"segment\": \"p1\"}",
-        "statusCode": 200
-      }
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"p1\"}"
     }
-  ]
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["2"]
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"p2\"}"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["3"]
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"p3\"}"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["4"]
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"p4\"}"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["5"]
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"gold\"}"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["6"]
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"silver\"}"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["7"]
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"premium\"}"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/user_segment",
+      "queryStringParameters": {
+        "user_id": ["8"]
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["application/json"]
+      },
+      "body": "{\"segment\": \"basic\"}"
+    }
+  }
+]
