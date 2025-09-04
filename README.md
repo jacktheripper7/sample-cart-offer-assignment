@@ -174,6 +174,6 @@ AI was used **minimally** for:
 ## 📌 Important Note
 
 🟢 **Test Case Documentation**
-- All designed test cases are also available in **Excel format** in the **root directory of this repository** as cart_offer_test_cases_full.xlsx.
+- All designed test cases are also available in **Excel format** in the **root directory of this repository** as cart_offer_test_cases.xlsx.
 - You can also view them directly here:  
   👉 [Google Sheets Link](https://docs.google.com/spreadsheets/d/1vmC7TW8D3_5ttIgcpcY-HjxOYyj_ElRNpgACUw17l68/edit?usp=sharing)  
