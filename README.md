@@ -155,7 +155,7 @@ flowchart LR
 * **Repository** → Stores offers (in-memory, first-offer-wins).
 * **MockServer** → Simulates external user segment API.
 
-
+---
 
 ## 🤖 Use of AI
 
@@ -164,7 +164,16 @@ AI was used **minimally** for:
 * Resolving **dependency compatibility** (Rest Assured with JDK 11).
 * Adding **inline comments** for easier readability.
 * Suggesting **test case structure and coverage ideas**.
+* Helped me come with a better architecture for the application to help me test.
+* Also helping shape a more scalable **application architecture** for testing.
 
 ⚡ **Core logic, design decisions, and the majority of implementation were done by me.**
 
 ---
+
+## 📌 Important Note
+
+🟢 **Test Case Documentation**
+- All designed test cases are also available in **Excel format** in the **root directory of this repository** as cart_offer_test_cases_full.xlsx.
+- You can also view them directly here:  
+  👉 [Google Sheets Link](https://docs.google.com/spreadsheets/d/1vmC7TW8D3_5ttIgcpcY-HjxOYyj_ElRNpgACUw17l68/edit?usp=sharing)  
